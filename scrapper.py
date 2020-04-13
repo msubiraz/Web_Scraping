@@ -29,12 +29,8 @@ for pais in soup.find_all('tr'):
     paises.append(total[1])
     i+=1
 
-paises.pop(0)
-paises.pop(-1)
+paises=list(set(paises))
 
-paises_clean = paises[:183]
-
-print('longitud lista paises: ',len(paises_clean))
 
 # crear una lista con la informacion de cada pais
 
