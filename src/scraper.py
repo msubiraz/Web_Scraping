@@ -119,14 +119,14 @@ class covid19Scraper():
         print('Lontigud sublistas info: ',len(self.lista_info[0]))
 
 
-    def build_dataframe(self):
+    def __build_dataframe(self):
         # 4. DataFrame
-        self.df=pd.DataFrame(self.lista_info,columns=self.columnas_def)
+        dframe=pd.DataFrame(self.lista_info,columns=self.columnas_def)
 
-        self.df[self.columnas[0]] = self.lista_paises
-        self.df[self.columnas[-1]] = self.lista_continentes
+        dframe[self.columnas[0]] = self.lista_paises
+        dframe[self.columnas[-1]] = self.lista_continentes
 
-        self.df = self.df[self.columnas] # Cambia Country,Other a la posicion 1
+        self.df = dframe[self.columnas] # Cambia Country,Other a la posicion 1
 
 
     def save_to_csv(self):
@@ -157,13 +157,23 @@ class covid19Scraper():
         self.df.to_csv(r'{}.csv'.format(nombre), index = False)
         print('\n\nArchivo guardado como {}.csv'.format(nombre))
 
+    def export_to_csv(self, filename):
+        # Overwrite to the specified file.
+		# Create it if it does not exist.
+        file = open("../csv/" + filename, "w+")
 
-    
+		# Dump all the data with CSV format
+        for i in range(len(self.df)):
+            for j in range(len(self.df[i])):
+                file.write(self.df[i][j] + ";")
+            file.write("\n")
 
     def __load_country_list(self):
         for i in range(len(sys.argv)):
             if i>0:
                 self.country_list.append(sys.argv[i])
+
+    
     
     def scraper (self):
         # Cargamos los datos de la web
@@ -176,13 +186,16 @@ class covid19Scraper():
         self.__get_countries()
 
         #Cargamos los datos de cada pais
-        self.__get_country_data
+        self.__get_country_data()
 
         # Formateamos los datos
-        self.__clean_data
+        self.__clean_data()
 
         # Guardamos el resultado en csv
-        self.save_to_csv
+        self.save_to_csv()
+
+        # Exportamos el resultado a csv
+        self.export_to_csv("dataset")
         
         #Cargamos los paises pasados por parametros 
         self.__load_country_list()
