@@ -8,7 +8,7 @@ La práctica gira entorno al Web Scraping y a la creación de repositorios para 
 
 ## Miembros del equipo
 
-La actividad ha sido realizada de manera conjunta por **Hugo Gomez** y **Marc Subirà**.
+La actividad ha sido realizada de manera conjunta por **Hugo Martin** y **Marc Subirà**.
 
 ## Ficheros del código fuente
 
