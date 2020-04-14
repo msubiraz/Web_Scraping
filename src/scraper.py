@@ -3,6 +3,9 @@ import pandas as pd
 from bs4 import BeautifulSoup
 import sys
 import csv
+import plotly
+import plotly.express as px
+import pycountry
 
 class covid19Scraper():
 
@@ -138,7 +141,7 @@ class covid19Scraper():
         dframe[self.columnas[0]] = self.lista_paises
         dframe[self.columnas[-1]] = self.lista_continentes
 
-        self.covid19_data = dframe[self.columnas] # Cambia Country,Other a la posicion 1
+        self.covid19_data = dframe[self.columnas] # Cambia Country/Other a la posicion 1
 
 
     def save_to_csv(self):
@@ -180,6 +183,71 @@ class covid19Scraper():
     #             file.write(self.covid19_data[i][j] + ";")
     #         file.write("\n")
 
+    def __get_alph_3(self,location):
+        try:
+            return pycountry.countries.get(name=location).alpha_3
+        except:
+            return None
+
+
+
+    def __visualize_data (self):
+
+
+        # from list(pycountry.countries)
+        self.covid19_data['Country/Other'][0] = 'United States'
+        self.covid19_data['Country/Other'][5] = 'United Kingdom'
+        self.covid19_data['Country/Other'][6] = 'Iran, Islamic Republic of'
+        self.covid19_data['Country/Other'][13] = 'Russian Federation'
+        self.covid19_data['Country/Other'][18] = 'Korea, Republic of'
+        self.covid19_data['Country/Other'][37] = 'United Arab Emirates'
+        self.covid19_data['Country/Other'][56] = 'Moldova, Republic of'
+        self.covid19_data['Country/Other'][87] = 'Côte d\'Ivoire'
+        self.covid19_data['Country/Other'][96] = 'Taiwan, Province of China'
+        self.covid19_data['Country/Other'][101] = 'Bolivia, Plurinational State of'
+        self.covid19_data['Country/Other'][105] = 'Palestine, State of'
+        self.covid19_data['Country/Other'][108] = 'Viet Nam'
+        self.covid19_data['Country/Other'][110] = 'Congo, The Democratic Republic of the'
+        self.covid19_data['Country/Other'][116] = 'Faroe Islands'
+        self.covid19_data['Country/Other'][117] = 'Venezuela, Bolivarian Republic of'
+        self.covid19_data['Country/Other'][123] = 'Brunei Darussalam'
+        self.covid19_data['Country/Other'][147] = 'Tanzania, United Republic of'
+        self.covid19_data['Country/Other'][156] = 'Saint Martin (French part)'
+        self.covid19_data['Country/Other'][158] = 'Syrian Arab Republic'
+        self.covid19_data['Country/Other'][183] = 'Saint Vincent and the Grenadines'
+        self.covid19_data['Country/Other'][184] = 'Central African Republic'
+        self.covid19_data['Country/Other'][194] = 'Turks and Caicos Islands'
+        self.covid19_data['Country/Other'][195] = 'Holy See (Vatican City State)'
+        self.covid19_data['Country/Other'][197] = 'Saint Barthélemy'
+        self.covid19_data['Country/Other'][201] = 'Falkland Islands (Malvinas)'
+        self.covid19_data['Country/Other'][206] = 'Virgin Islands, British'
+        self.covid19_data['Country/Other'][209] = 'Saint Pierre and Miquelon'
+
+        # Anadimos el codigo alph al data frame
+        self.covid19_data['Code'] = self.covid19_data['Country/Other'].apply(lambda x: self.__get_alph_3(x))
+
+        # columnas nuevo orden
+        col_new = [self.covid19_data.columns[-1]]+[self.covid19_data.columns[0]]+[self.covid19_data.columns[-2]]+list(self.covid19_data.columns[1:-2])
+
+        df_def=self.covid19_data[col_new]
+
+        # Confirmed
+        fig_c = px.choropleth(df_def, locations='Country/Other', locationmode='country names', 
+                            color="TotalCases", hover_name="Country/Other", hover_data=['TotalCases'],
+                            color_continuous_scale=px.colors.sequential.Plasma)
+        fig_c.update_layout(
+            title_text = 'Casos Totales Coronavirus')
+        fig_c.show()
+        # Deaths
+
+        fig_d = px.choropleth(df_def, locations='Country/Other', locationmode='country names',
+                            color="TotalDeaths", hover_name="Country/Other", hover_data=['TotalDeaths'],
+                            color_continuous_scale=px.colors.sequential.Plasma)
+
+        fig_d.update_layout(
+            title_text = 'Muertes Totales Coronavirus')
+        fig_d.show()
+
     
     
     def scraper (self):
@@ -206,6 +274,9 @@ class covid19Scraper():
 
         # Guardamos el resultado en csv
         self.save_to_csv()
+
+        # visualizamos los datos
+        self.__visualize_data()
 
         # Exportamos el resultado a csv
         # self.export_to_csv("covid_by_country.csv")
