@@ -6,6 +6,7 @@ import csv
 import plotly
 import plotly.express as px
 import pycountry
+import sys
 
 class covid19Scraper():
 
