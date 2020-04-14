@@ -37,6 +37,9 @@ El programa tiene como outputs
 * fichero .csv con los datos de covid por país
 * Visualizaciones abiertas en ventanas del navegador con los casos de covid y muertes, en mapa, por país 
 
+## DOI
+<a href="https://doi.org/10.5281/zenodo.3751877"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.3751877.svg" alt="DOI"></a>
+
 ## Recursos
 
 1. Subirats, L., Calvo, M. (2019). Web Scraping. Editorial UOC.
