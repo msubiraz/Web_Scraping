@@ -13,7 +13,7 @@ La actividad ha sido realizada de manera conjunta por **Hugo Gomez** y **Marc Su
 ## Ficheros del código fuente
 
 * **src/main.py**: punto de entrada al programa. Inicia el proceso de scraping.
-* **src/scraper.py**: contiene la implementación de la clase _scraper_ para extraer información de la página https://www.worldometers.info/coronavirus/.
+* **src/scraper.py**: contiene la implementación de la clase _covid19Scraper_ para extraer información de la página https://www.worldometers.info/coronavirus/.
 * **export.py**: Contiene la implementación de la classe export para la exportación de información --DEPRECATED
 
 ## Programa
