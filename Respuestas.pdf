@@ -1,10 +1,7 @@
 Práctica 1  - Web Scraping
 
-1. La practica se esempeña en un contexto social inusual marcado por la Pandemia de emfermedad por coronavirus (COVID-19). En dicho contexto, 
-marcado por la actlualización de la información con gran frecuencia, encontramos la necessidad de disponer y de los últimos datos de afectaciones por país.
-
-Para ello hemos escogido la web https://www.worldometers.info/coronavirus/ la cual consolida y actualiza de forma periódica los casos oficiales registrados
-de COVID-19, por país.
+1. La práctica se desempeña en un contexto social inusual marcado por la Pandemia de enfermedad por coronavirus (COVID-19). En dicho contexto, se da una actualización de la información con gran frecuencia, y encontramos la necesidad de disponer siempre de los últimos datos de afectaciones por país.
+Para ello se ha escogido la web https://www.worldometers.info/coronavirus/ , la cual consolida y actualiza de forma periódica los casos oficiales registrados de COVID-19, por país.
 
 2. El nombre del dataset es covid19_by_country
 
@@ -12,9 +9,28 @@ de COVID-19, por país.
 
 4.
 
-5.
+5. El dataset contiene un resumen de los casos de coronavirus actualizados a diario. El programa captura y guarda en un .csv las siguientes columnas:
+•	"conutry/Other": Indica el país al cual refieren los datos del resto de columnas.
+•	"Total Cases": Número total de casos covid19 detectados desde el inicio de la Pandemia.
+•	"New Cases":  Número de nuevos casos de contagios covid19, durante el día.
+•	“Total Deaths: Número total de muertes causadas por covid19 desde el inicio de la Pandemia.
+•	“New Deaths”: Número de nuevos casos de muertes causadas por covid19, durante el día.
+•	“Total Recovered”: Número total de casos recuperados de covid19, desde el inicio de la Pandemia.
+•	“Active Cases”: Número total de casos activos de covid19. 
+•	“Serious, Critical”: Número total de casos críticos, con necesidades asistenciales urgentes, dentro del total de casos activos por covid19.
+•	“Tot Cases/1M pop”: Número total de casos covid19, por cada millón de habitantes.
+•	“Deaths/1M pop”: Número total de muertes causadas por covid19, por cada millón de habitantes.
+•	“Total Tests”: Número total de tests de detección de covid19 realizados desde el inicio de la pandemia.
+•	“Tests/1M pop”: Número de tests de detección de covid19 realizados por cada millón de habitantes, desde el inicio de la pandemia.
 
-6.
+
+6. Agradecimientos a Worldometer por recopilar los datos oficiales de distintas fuentes gubernamentales y consolidarlas en una Website de referencia para el seguimiento de la pandemia covid19.
+Worldometers.info es propiedad de Dadax, una compañía independiente, y está dirigida por un equipo internacional de desarrolladores, investigadores y voluntarios con el objetivo de hacer que las estadísticas mundiales estén disponibles en un formato útil para la reflexión en un tiempo determinado, para una amplia audiencia en todo el mundo.
+No disponen de afiliación política, gubernamental o corporativa.
+Por lo que refiere a la propiedad de los datos:
+Autor: Worldometers.info
+Fecha de publicación: 14 April, 2020
+Lugar de publicación: Dover, Delaware, U.S.A.
 
 7.
 

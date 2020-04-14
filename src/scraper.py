@@ -2,6 +2,7 @@ import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 import sys
+import csv
 
 class covid19Scraper():
 
@@ -30,7 +31,13 @@ class covid19Scraper():
         self.columnas[0] = 'Country/Other'
         self.columnas[8] = 'Tot Cases/1M pop' 
         self.columnas[11] = "Tests/1M pop"
+    
+    def __load_country_list(self):
+        for i in range(len(sys.argv)):
+            if i>0:
+                self.country_list.append(sys.argv[i])
 
+    
     def __get_countries(self):
         
         i=0
@@ -42,6 +49,10 @@ class covid19Scraper():
             i+=1
 
             self.paises_clean = list(set(paises))
+        
+        if len(self.country_list) != 0:
+            self.paises_clean=self.country_list
+
 
     def __get_country_data(self):
         
@@ -120,13 +131,14 @@ class covid19Scraper():
 
 
     def __build_dataframe(self):
-        # 4. DataFrame
+        # 4. DataFrame        
+        
         dframe=pd.DataFrame(self.lista_info,columns=self.columnas_def)
 
         dframe[self.columnas[0]] = self.lista_paises
         dframe[self.columnas[-1]] = self.lista_continentes
 
-        self.df = dframe[self.columnas] # Cambia Country,Other a la posicion 1
+        self.covid19_data = dframe[self.columnas] # Cambia Country,Other a la posicion 1
 
 
     def save_to_csv(self):
@@ -154,24 +166,19 @@ class covid19Scraper():
 
         # Guarda el DataFrame actual en la carpeta deseada con el nombre en formato 
         # Corona_dd-mm-aaaa_Thhmm
-        self.df.to_csv(r'{}.csv'.format(nombre), index = False)
+        self.covid19_data.to_csv(r'{}.csv'.format(nombre), index = False)
         print('\n\nArchivo guardado como {}.csv'.format(nombre))
 
-    def export_to_csv(self, filename):
-        # Overwrite to the specified file.
-		# Create it if it does not exist.
-        file = open("../csv/" + filename, "w+")
+    # def export_to_csv(self, filename):
+    #     # Overwrite to the specified file.
+	# 	# Create it if it does not exist.
+    #     file = open("/csv/" + filename, "w+")
 
-		# Dump all the data with CSV format
-        for i in range(len(self.df)):
-            for j in range(len(self.df[i])):
-                file.write(self.df[i][j] + ";")
-            file.write("\n")
-
-    def __load_country_list(self):
-        for i in range(len(sys.argv)):
-            if i>0:
-                self.country_list.append(sys.argv[i])
+	# 	# Dump all the data with CSV format
+    #     for i in range(len(self.covid19_data)):
+    #         for j in range(len(self.covid19_data[i])):
+    #             file.write(self.covid19_data[i][j] + ";")
+    #         file.write("\n")
 
     
     
@@ -182,6 +189,9 @@ class covid19Scraper():
         # Cargamos las columnas de datos
         self.__get_data_columns()
 
+        #Cargamos los paises pasados por parametros 
+        self.__load_country_list()
+
         #Cargamos los paises
         self.__get_countries()
 
@@ -191,11 +201,13 @@ class covid19Scraper():
         # Formateamos los datos
         self.__clean_data()
 
+        # Creamos nuestro dataset
+        self.__build_dataframe()
+
         # Guardamos el resultado en csv
         self.save_to_csv()
 
         # Exportamos el resultado a csv
-        self.export_to_csv("dataset")
+        # self.export_to_csv("covid_by_country.csv")
         
-        #Cargamos los paises pasados por parametros 
-        self.__load_country_list()
+        
